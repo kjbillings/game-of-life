@@ -1,0 +1,46 @@
+{
+    "name": "@kjbillings/game-of-life",
+    "version": "1.0.0",
+    "description": "Conway's Game of Life",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "rollup --environment BUILD:dev --config rollup.config.js",
+        "buildWatch": "rollup --environment BUILD:dev --watch --config rollup.config.js",
+        "start": "npm run buildProd && node frontend-server.js",
+        "buildProd": "rollup --environment BUILD:prod --watch --config rollup.config.js",
+        "startProd": "npm run buildProd && node frontend-server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kjbillings/game-of-life.git"
+    },
+    "author": "kjbillings",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/kjbillings/game-of-life/issues"
+    },
+    "homepage": "https://github.com/kjbillings/game-of-life#readme",
+    "dependencies": {
+        "@babel/core": "^7.9.0",
+        "@rollup/plugin-node-resolve": "^7.1.1",
+        "arsnl": "^1.0.10",
+        "clsx": "^1.1.0",
+        "express": "^4.17.1",
+        "he": "^1.2.0",
+        "lodash": "^4.17.15",
+        "path-to-regexp": "^6.1.0",
+        "querystring": "^0.2.0",
+        "rollup": "2.0.6",
+        "rollup-plugin-babel": "^4.4.0",
+        "rollup-plugin-commonjs": "^10.1.0",
+        "rollup-plugin-node-builtins": "^2.1.2",
+        "rollup-plugin-svg": "^2.0.0"
+    },
+    "devDependencies": {
+        "node-sass": "^4.13.1",
+        "rollup-plugin-json": "^4.0.0",
+        "rollup-plugin-livereload": "^1.0.4",
+        "rollup-plugin-postcss": "^2.5.0",
+        "rollup-plugin-serve": "^1.1.0"
+    }
+}

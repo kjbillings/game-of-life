@@ -1,0 +1,5 @@
+{
+    "buildInputFilePath": "./src/index.js",
+    "frontendServerPort": 80,
+    "build": "prod"
+}
