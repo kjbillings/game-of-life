@@ -18,12 +18,12 @@ const viewBox = `0 0 ${getUnit(UNITS_WIDE)} ${getUnit(UNITS_TALL)}`
 const height = getUnitPx(UNITS_TALL)
 const width = getUnitPx(UNITS_WIDE)
 
-const Grid = (worldState, time, isPaused, resetCount) => {
+const Grid = (worldState, time, isPaused, resetCount, selectedPreset) => {
   let isClicked = false
   return (
     svg(() => {
       if (isEmpty(worldState[getId(0,0)])) {
-        draw(worldState, time, isPaused, isClicked)
+        draw(worldState, time, isPaused, isClicked, selectedPreset)
       }
       return {
         xmlns: "http://www.w3.org/2000/svg",

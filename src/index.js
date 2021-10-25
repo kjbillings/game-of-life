@@ -6,6 +6,6 @@ import './index.scss'
 new App({
     id: 'app-root',
     router: new Router(routes),
-    title: 'Test',
+    title: 'KJB',
     component: rootComponent,
 })

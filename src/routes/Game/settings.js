@@ -1,4 +1,3 @@
-export const MILLISECONDS = 100
 export const UNIT_SIZE = 10
 export const UNITS_TALL = 50
 export const UNITS_WIDE = 50

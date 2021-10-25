@@ -18442,7 +18442,6 @@ var rootComponent = app => {
     )
 };
 
-const MILLISECONDS = 100;
 const UNIT_SIZE = 10;
 const UNITS_TALL = 50;
 const UNITS_WIDE = 50;
@@ -18474,7 +18473,7 @@ var Stage = (render) => {
 const ticker = time => (
   setInterval(() => {
     time.value += 1;
-  }, MILLISECONDS)
+  }, 300)
 );
 
 const Clock = (time, isPaused) => {
@@ -18515,6 +18514,129 @@ const ResetButton = (onClick, isPaused) => {
           render: 'Clear',
           disabled: isPaused.value !== true || null,
           onClick,
+        })
+      )
+    }), [ isPaused ])
+  )
+};
+
+var Glider = {
+  '0-0': true,
+  '0-2': true,
+  '1-1': true,
+  '1-2': true,
+  '2-1': true,
+};
+
+const GospersGliderGun = {
+  '1-5': true,
+  '1-6': true,
+  '2-5': true,
+  '2-6': true,
+  '11-5': true,
+  '11-6': true,
+  '11-7': true,
+  '12-4': true,
+  '12-8': true,
+  '13-3': true,
+  '13-9': true,
+  '14-3': true,
+  '14-9': true,
+  '15-6': true,
+  '16-4': true,
+  '16-8': true,
+  '17-5': true,
+  '17-6': true,
+  '17-7': true,
+  '18-6': true,
+  '21-3': true,
+  '21-4': true,
+  '21-5': true,
+  '22-3': true,
+  '22-4': true,
+  '22-5': true,
+  '23-2': true,
+  '23-6': true,
+  '25-1': true,
+  '25-2': true,
+  '25-6': true,
+  '25-7': true,
+  '35-3': true,
+  '35-4': true,
+  '36-3': true,
+  '36-4': true,
+};
+
+const SimkinsGliderGun = {
+  '1-1': true,
+  '1-2': true,
+  '2-1': true,
+  '2-2': true,
+  '5-4': true,
+  '5-5': true,
+  '6-4': true,
+  '6-5': true,
+  '8-1': true,
+  '8-2': true,
+  '9-1': true,
+  '9-2': true,
+  '21-18': true,
+  '21-19': true,
+  '22-11': true,
+  '22-12': true,
+  '22-13': true,
+  '22-18': true,
+  '22-20': true,
+  '23-10': true,
+  '23-13': true,
+  '23-20': true,
+  '24-10': true,
+  '24-13': true,
+  '24-20': true,
+  '24-21': true,
+  '26-10': true,
+  '27-10': true,
+  '27-14': true,
+  '28-11': true,
+  '28-13': true,
+  '29-12': true,
+  '32-12': true,
+  '32-13': true,
+  '33-12': true,
+  '33-13': true,
+};
+
+
+
+var presets = /*#__PURE__*/Object.freeze({
+	__proto__: null,
+	Glider: Glider,
+	GospersGliderGun: GospersGliderGun,
+	SimkinsGliderGun: SimkinsGliderGun
+});
+
+const PresetButton = (onChange, isPaused) => {
+  return (
+    dist_101(() => ({
+      style: {
+        margin: '0 10px',
+      },
+      render: (
+        dist_98({
+          value: '',
+          render: [
+            dist_81({
+              value: '',
+              render: 'Select a preset',
+            }),
+            Object.keys(presets).map(key => (
+              dist_81({
+                render: key,
+              })
+            )),
+          ],
+          disabled: isPaused.value !== true || null,
+          onChange,
         })
       )
     }), [ isPaused ])
@@ -35714,11 +35836,12 @@ var lodash_1 = lodash.forEach;
 var lodash_2 = lodash.get;
 var lodash_3 = lodash.set;
 var lodash_4 = lodash.range;
-var lodash_5 = lodash.merge;
-var lodash_6 = lodash.includes;
-var lodash_7 = lodash.isEmpty;
-var lodash_8 = lodash.isString;
-var lodash_9 = lodash.reject;
+var lodash_5 = lodash.some;
+var lodash_6 = lodash.merge;
+var lodash_7 = lodash.includes;
+var lodash_8 = lodash.isEmpty;
+var lodash_9 = lodash.isString;
+var lodash_10 = lodash.reject;
 
 const DELIMITER = '-';
 
@@ -35793,27 +35916,39 @@ const birth = (id, el, livingUnits) => {
   updateCell(id, el, true, livingUnits);
 };
 
+
 const applyConwaysRules = (id, el, livingUnits) => {
   const neighbors = getNeighbors(id);
   const isLiving = livingUnits[id] === true;
   const livingNeighborCount = getLivingNeighborCount(neighbors, livingUnits);
 
-  const underpopulation = isLiving && livingNeighborCount < 2;
-  const overpopulation = livingNeighborCount > 3;
-  const reproduction = !isLiving && livingNeighborCount === 3;
+  const underpopulated = isLiving && livingNeighborCount < 2;
+  const overpopulated = livingNeighborCount > 3;
+  const reproducing = !isLiving && livingNeighborCount === 3;
+
+  const certainDeath = (
+    underpopulated
+    || overpopulated
+  );
+
+  const weAreExpecting = (
+    reproducing
+  );
 
   setTimeout(() => { // to make sure it waits for its neighbors first
-    if (underpopulation || overpopulation) {
+    if (certainDeath) {
       death(id, el, livingUnits);
     }
-    if (reproduction) {
+    if (weAreExpecting) {
       birth(id, el, livingUnits);
     }
-  }, 150);
+  }, 30);
 };
 
-const draw = (worldState, time, isPaused, isClicked) => {
-  const livingUnits = {};
+const draw = (worldState, time, isPaused, isClicked, selectedPreset) => {
+  const preset = lodash_2(presets, selectedPreset.name, {});
+  const livingUnits = lodash_8(selectedPreset.name) ? {} : {...preset};
+
   for (var y = 0; y < UNITS_TALL; y++) {
     for (var x = 0; x < UNITS_WIDE; x++) {
       const id = getId(x,y);
@@ -35830,6 +35965,7 @@ const draw = (worldState, time, isPaused, isClicked) => {
               birth(id, this, livingUnits);
             }
           }
+          console.log(livingUnits);
         },
         onmousedown: () => {
           if (isPaused.value) {
@@ -35862,12 +35998,12 @@ const viewBox = `0 0 ${getUnit(UNITS_WIDE)} ${getUnit(UNITS_TALL)}`;
 const height = getUnitPx(UNITS_TALL);
 const width = getUnitPx(UNITS_WIDE);
 
-const Grid = (worldState, time, isPaused, resetCount) => {
+const Grid = (worldState, time, isPaused, resetCount, selectedPreset) => {
   let isClicked = false;
   return (
     dist_108(() => {
-      if (lodash_7(worldState[getId(0,0)])) {
-        draw(worldState, time, isPaused, isClicked);
+      if (lodash_8(worldState[getId(0,0)])) {
+        draw(worldState, time, isPaused, isClicked, selectedPreset);
       }
       return {
         xmlns: "http://www.w3.org/2000/svg",
@@ -35893,6 +36029,7 @@ const Grid = (worldState, time, isPaused, resetCount) => {
 
 var Game = ({ setTitle }) => {
     setTitle('Game of Life');
+    const selectedPreset = dist_4({ name: '' });
     const worldState = dist_4({});
     const isPaused = dist_4({ value: true });
     const time = dist_4({ value: 0 });
@@ -35902,6 +36039,13 @@ var Game = ({ setTitle }) => {
       worldState['0-0'] = {};
       time.value = 0;
       resetCount.value += 1;
+    };
+    const onChange = (e) => {
+      selectedPreset.name = e.target.value;
+      onReset();
+      setTimeout(() => {
+        selectedPreset.name = '';
+      }, 10);
     };
 
     return (
@@ -35915,9 +36059,21 @@ var Game = ({ setTitle }) => {
             PauseButton(isPaused, time),
             Clock(time),
             ResetButton(onReset, isPaused),
+            PresetButton(onChange, isPaused),
           ]
         }),
-        Grid(worldState, time, isPaused, resetCount)
+        // img({
+        //   src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Game_of_life_Simkin_glider_gun.svg/749px-Game_of_life_Simkin_glider_gun.svg.png',
+        //   style: {
+        //     width: '368px',
+        //     position: 'absolute',
+        //     marginLeft: '-58px',
+        //     marginTop: '-132px',
+        //     opacity: 0.1,
+        //     pointerEvents: 'none',
+        //   }
+        // }),
+        Grid(worldState, time, isPaused, resetCount, selectedPreset)
       ])
   )
 };
@@ -35960,6 +36116,6 @@ styleInject(css_248z);
 new dist_1({
     id: 'app-root',
     router: new dist_3(routes),
-    title: 'Test',
+    title: 'KJB',
     component: rootComponent,
 });

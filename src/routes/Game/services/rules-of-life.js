@@ -14,21 +14,31 @@ export const birth = (id, el, livingUnits) => {
   updateCell(id, el, true, livingUnits)
 }
 
+
 export const applyConwaysRules = (id, el, livingUnits) => {
   const neighbors = getNeighbors(id)
   const isLiving = livingUnits[id] === true
   const livingNeighborCount = getLivingNeighborCount(neighbors, livingUnits)
 
-  const underpopulation = isLiving && livingNeighborCount < 2
-  const overpopulation = livingNeighborCount > 3
-  const reproduction = !isLiving && livingNeighborCount === 3
+  const underpopulated = isLiving && livingNeighborCount < 2
+  const overpopulated = livingNeighborCount > 3
+  const reproducing = !isLiving && livingNeighborCount === 3
+
+  const certainDeath = (
+    underpopulated
+    || overpopulated
+  )
+
+  const weAreExpecting = (
+    reproducing
+  )
 
   setTimeout(() => { // to make sure it waits for its neighbors first
-    if (underpopulation || overpopulation) {
+    if (certainDeath) {
       death(id, el, livingUnits)
     }
-    if (reproduction) {
+    if (weAreExpecting) {
       birth(id, el, livingUnits)
     }
-  }, 150)
+  }, 30)
 }

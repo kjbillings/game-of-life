@@ -1,11 +1,11 @@
 import { State, span } from 'arsnl'
 
-import { MILLISECONDS, CLOCK_COLOR } from './settings'
+import { CLOCK_COLOR } from './settings'
 
 export const ticker = time => (
   setInterval(() => {
     time.value += 1
-  }, MILLISECONDS)
+  }, 300)
 )
 
 const Clock = (time, isPaused) => {

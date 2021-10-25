@@ -31,6 +31,7 @@ export default {
                     'get',
                     'set',
                     'range',
+                    'some',
                     'merge',
                     'includes',
                     'isEmpty',
