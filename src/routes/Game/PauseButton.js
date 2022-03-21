@@ -1,7 +1,5 @@
 import { button } from 'arsnl'
 
-import { ticker } from './Clock'
-
 let interval
 const PauseButton = (isPaused, time) => {
   return (
@@ -9,7 +7,9 @@ const PauseButton = (isPaused, time) => {
       render: isPaused.value ? 'Start' : 'Stop',
       onClick: () => {
         if (isPaused.value === true) {
-          interval = ticker(time)
+          interval = setInterval(() => {
+            time.value += 1
+          }, 400)
         } else {
           clearInterval(interval)
         }

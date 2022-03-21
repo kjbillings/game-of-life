@@ -40,5 +40,5 @@ export const applyConwaysRules = (id, el, livingUnits) => {
     if (weAreExpecting) {
       birth(id, el, livingUnits)
     }
-  }, 30)
+  }, 50)
 }

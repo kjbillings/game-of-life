@@ -1,3 +1,5 @@
+
+(function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(window.document);
 'use strict';
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -18442,6 +18444,17 @@ var rootComponent = app => {
     )
 };
 
+const Holon = () => {
+    return (
+        dist_34({
+            style: {
+                height: '100vh',
+                width: '100vw',
+            },
+        })
+    )
+};
+
 const UNIT_SIZE = 10;
 const UNITS_TALL = 50;
 const UNITS_WIDE = 50;
@@ -18470,11 +18483,24 @@ var Stage = (render) => {
   )
 };
 
-const ticker = time => (
-  setInterval(() => {
-    time.value += 1;
-  }, 300)
-);
+let interval;
+const PauseButton = (isPaused, time) => {
+  return (
+    dist_20(() => ({
+      render: isPaused.value ? 'Start' : 'Stop',
+      onClick: () => {
+        if (isPaused.value === true) {
+          interval = setInterval(() => {
+            time.value += 1;
+          }, 400);
+        } else {
+          clearInterval(interval);
+        }
+        isPaused.value = !isPaused.value;
+      }
+    }), [ isPaused ])
+  )
+};
 
 const Clock = (time, isPaused) => {
   return (
@@ -18486,23 +18512,6 @@ const Clock = (time, isPaused) => {
       },
       render: `${time.value} Ticks`
     }), [ time ])
-  )
-};
-
-let interval;
-const PauseButton = (isPaused, time) => {
-  return (
-    dist_20(() => ({
-      render: isPaused.value ? 'Start' : 'Stop',
-      onClick: () => {
-        if (isPaused.value === true) {
-          interval = ticker(time);
-        } else {
-          clearInterval(interval);
-        }
-        isPaused.value = !isPaused.value;
-      }
-    }), [ isPaused ])
   )
 };
 
@@ -18567,7 +18576,7 @@ const GospersGliderGun = {
   '36-4': true,
 };
 
-const SimkinsGliderGun = {
+var SimkinsGliderGun = {
   '1-1': true,
   '1-2': true,
   '2-1': true,
@@ -18606,13 +18615,249 @@ const SimkinsGliderGun = {
   '33-13': true,
 };
 
+var CoolLinesHorizontal = {
+  '0-23': true,
+  '0-25': true,
+  '1-23': true,
+  '1-25': true,
+  '2-23': true,
+  '2-25': true,
+  '3-23': true,
+  '3-25': true,
+  '4-23': true,
+  '4-25': true,
+  '5-23': true,
+  '5-25': true,
+  '6-23': true,
+  '6-25': true,
+  '7-23': true,
+  '7-25': true,
+  '8-23': true,
+  '8-25': true,
+  '9-23': true,
+  '9-25': true,
+  '10-23': true,
+  '10-25': true,
+  '11-23': true,
+  '11-25': true,
+  '12-23': true,
+  '12-25': true,
+  '13-23': true,
+  '13-25': true,
+  '14-23': true,
+  '14-25': true,
+  '15-23': true,
+  '15-25': true,
+  '16-23': true,
+  '16-25': true,
+  '17-23': true,
+  '17-25': true,
+  '18-23': true,
+  '18-25': true,
+  '19-23': true,
+  '19-25': true,
+  '20-23': true,
+  '20-25': true,
+  '21-23': true,
+  '21-25': true,
+  '22-23': true,
+  '22-25': true,
+  '23-23': true,
+  '23-25': true,
+  '24-23': true,
+  '24-25': true,
+  '25-23': true,
+  '25-25': true,
+  '26-23': true,
+  '26-25': true,
+  '27-23': true,
+  '27-25': true,
+  '28-23': true,
+  '28-25': true,
+  '29-23': true,
+  '29-25': true,
+  '30-23': true,
+  '30-25': true,
+  '31-23': true,
+  '31-25': true,
+  '32-23': true,
+  '32-25': true,
+  '33-23': true,
+  '33-25': true,
+  '34-23': true,
+  '34-25': true,
+  '35-23': true,
+  '35-25': true,
+  '36-23': true,
+  '36-25': true,
+  '37-23': true,
+  '37-25': true,
+  '38-23': true,
+  '38-25': true,
+  '39-23': true,
+  '39-25': true,
+  '40-23': true,
+  '40-25': true,
+  '41-23': true,
+  '41-25': true,
+  '42-23': true,
+  '42-25': true,
+  '43-23': true,
+  '43-25': true,
+  '44-23': true,
+  '44-25': true,
+  '45-23': true,
+  '45-25': true,
+  '46-23': true,
+  '46-25': true,
+  '47-23': true,
+  '47-25': true,
+  '48-23': true,
+  '48-25': true,
+  '49-23': true,
+  '49-25': true,
+};
+
+var CoolLinesVertical = {
+  '24-0': true,
+  '24-1': true,
+  '24-2': true,
+  '24-3': true,
+  '24-4': true,
+  '24-5': true,
+  '24-6': true,
+  '24-7': true,
+  '24-8': true,
+  '24-9': true,
+  '24-10': true,
+  '24-11': true,
+  '24-12': true,
+  '24-13': true,
+  '24-14': true,
+  '24-15': true,
+  '24-16': true,
+  '24-17': true,
+  '24-18': true,
+  '24-19': true,
+  '24-20': true,
+  '24-21': true,
+  '24-22': true,
+  '24-23': true,
+  '24-24': true,
+  '24-25': true,
+  '24-26': true,
+  '24-27': true,
+  '24-28': true,
+  '24-29': true,
+  '24-30': true,
+  '24-31': true,
+  '24-32': true,
+  '24-33': true,
+  '24-34': true,
+  '24-35': true,
+  '24-36': true,
+  '24-37': true,
+  '24-38': true,
+  '24-39': true,
+  '24-40': true,
+  '24-41': true,
+  '24-42': true,
+  '24-43': true,
+  '24-44': true,
+  '24-45': true,
+  '24-46': true,
+  '24-47': true,
+  '24-48': true,
+  '24-49': true,
+  '26-0': true,
+  '26-1': true,
+  '26-2': true,
+  '26-3': true,
+  '26-4': true,
+  '26-5': true,
+  '26-6': true,
+  '26-7': true,
+  '26-8': true,
+  '26-9': true,
+  '26-10': true,
+  '26-11': true,
+  '26-12': true,
+  '26-13': true,
+  '26-14': true,
+  '26-15': true,
+  '26-16': true,
+  '26-17': true,
+  '26-18': true,
+  '26-19': true,
+  '26-20': true,
+  '26-21': true,
+  '26-22': true,
+  '26-23': true,
+  '26-24': true,
+  '26-25': true,
+  '26-26': true,
+  '26-27': true,
+  '26-28': true,
+  '26-29': true,
+  '26-30': true,
+  '26-31': true,
+  '26-32': true,
+  '26-33': true,
+  '26-34': true,
+  '26-35': true,
+  '26-36': true,
+  '26-37': true,
+  '26-38': true,
+  '26-39': true,
+  '26-40': true,
+  '26-41': true,
+  '26-42': true,
+  '26-43': true,
+  '26-44': true,
+  '26-45': true,
+  '26-46': true,
+  '26-47': true,
+  '26-48': true,
+  '26-49': true,
+};
+
+var CrazyEyes = {
+  '15-10': true,
+  '15-11': true,
+  '15-12': true,
+  '17-8': true,
+  '17-14': true,
+  '18-8': true,
+  '18-14': true,
+  '19-8': true,
+  '19-14': true,
+  '21-10': true,
+  '21-11': true,
+  '21-12': true,
+  '25-10': true,
+  '25-11': true,
+  '25-12': true,
+  '27-8': true,
+  '27-14': true,
+  '28-8': true,
+  '28-14': true,
+  '29-8': true,
+  '29-14': true,
+  '31-10': true,
+  '31-11': true,
+  '31-12': true,
+};
+
 
 
 var presets = /*#__PURE__*/Object.freeze({
 	__proto__: null,
 	Glider: Glider,
 	GospersGliderGun: GospersGliderGun,
-	SimkinsGliderGun: SimkinsGliderGun
+	SimkinsGliderGun: SimkinsGliderGun,
+	CoolLinesHorizontal: CoolLinesHorizontal,
+	CoolLinesVertical: CoolLinesVertical,
+	CrazyEyes: CrazyEyes
 });
 
 const PresetButton = (onChange, isPaused) => {
@@ -35942,7 +36187,7 @@ const applyConwaysRules = (id, el, livingUnits) => {
     if (weAreExpecting) {
       birth(id, el, livingUnits);
     }
-  }, 30);
+  }, 50);
 };
 
 const draw = (worldState, time, isPaused, isClicked, selectedPreset) => {
@@ -36078,8 +36323,102 @@ var Game = ({ setTitle }) => {
   )
 };
 
+var Stage$1 = (render) => {
+    return (
+      dist_34({
+        style: {
+          height: '100vh',
+          width: '100vw',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          color: '#ffffff',
+          backgroundColor: '#000000',
+        },
+        render,
+      })
+  )
+};
+
+const getRandom = () => {
+  var num = Math.floor(Math.random()*100) + 1; // this will get a number between 1 and 99;
+  num *= Math.round(Math.random()) ? 1 : -1; // this will add minus sign in 50% of cases
+  return num
+};
+
+const breathe = (spirit) => {
+  const o = spirit.breath > 0.5 ? 0.5 : 1;
+  setTimeout(() => {
+    spirit.breath = o * spirit.energy;
+    breathe(spirit);
+  }, spirit.ageRate * 2);
+};
+
+const age = (spirit) => {
+  setTimeout(() => {
+    spirit.energy = spirit.energy - 0.01;
+    age(spirit);
+  }, spirit.ageRate);
+};
+
+const live = (spirit) => {
+  setTimeout(() => {
+    spirit.negative = 255;
+    spirit.positive = 255;
+    spirit.nerves = 255;
+    spirit.energy = 1;
+    spirit.breath = 1;
+  }, spirit.ageRate);
+
+  breathe(spirit);
+  age(spirit);
+  window.spirit = spirit;
+};
+
+const Unit$1 = () => {
+  const spirit = dist_4({
+    negative: 0, // negative
+    positive: 0, // positive
+    nerves: 0, // intensity
+    breath: 0,
+    energy: 0, // energy
+    ageRate: 2000,
+    x: getRandom(),
+    y: getRandom(),
+  });
+  live(spirit);
+  return dist_34(() => ({
+    style: {
+      marginTop: `${spirit.x}px`,
+      marginLeft: `${spirit.y}px`,
+      position: 'absolute',
+      borderRadius: '50%',
+      height: `${20 * spirit.energy}px`,
+      width: `${20 * spirit.energy}px`,
+      background: `rgba(${spirit.negative}, ${spirit.positive}, ${spirit.nerves}, ${spirit.breath})`,
+      transition: `all ${spirit.ageRate}ms ease-out`,
+    }
+  }), [ spirit ])
+};
+
+var Robot = ({ setTitle }) => {
+    setTitle('Robot');
+    return (
+      Stage$1([
+        Unit$1()
+      ])
+  )
+};
+
+// players
+var Deck = () => '';
+
 const routes = {
-    "/": Game,
+    "/": Deck,
+    "/robot": Robot,
+    "/holon": Holon,
+    "/game-of-life": Game,
     "/404": ({ redirect }) => redirect('/'),
 };
 

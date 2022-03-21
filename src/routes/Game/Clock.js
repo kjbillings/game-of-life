@@ -2,12 +2,6 @@ import { State, span } from 'arsnl'
 
 import { CLOCK_COLOR } from './settings'
 
-export const ticker = time => (
-  setInterval(() => {
-    time.value += 1
-  }, 300)
-)
-
 const Clock = (time, isPaused) => {
   return (
     span(() => ({

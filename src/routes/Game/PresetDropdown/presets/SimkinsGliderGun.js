@@ -1,4 +1,4 @@
-const SimkinsGliderGun = {
+export default {
   '1-1': true,
   '1-2': true,
   '2-1': true,
@@ -36,5 +36,3 @@ const SimkinsGliderGun = {
   '33-12': true,
   '33-13': true,
 }
-
-export default SimkinsGliderGun

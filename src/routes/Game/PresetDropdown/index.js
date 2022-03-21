@@ -1,5 +1,7 @@
 import { span, select, option } from 'arsnl'
+
 import * as presets from './presets'
+
 const PresetButton = (onChange, isPaused) => {
   return (
     span(() => ({
